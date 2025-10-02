@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+} 
+
+ 
+model User {
+ id        Int       @default(autoincrement())
+  uuid           String    @unique     
+  balance Int @default(0)
+  tincome Int @default(0)
+  tspent Int @default(0)
+  role Role @default(USER)
+  country String
+  intertransfer InternationalTransfer[]
+  localtransfer LocalTransfer[]
+  card VirtualCard[]
+  addfund Addfund[]
+  @@id([id])
+}
+ 
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+
+model Addfundwallet{
+  id        Int      @id @default(autoincrement())
+  uuid      String  @default(uuid()) 
+ 
+  accountNum String 
+  accountName String 
+  swiftcode String
+  address String
+  country String
+addfund Addfund @relation(fields: [id],references: [id])
+}
+
+
+
+
+model Addfund{
+  id        Int      @id @default(autoincrement())
+  uuid      String  @default(uuid()) 
+  amount Int 
+  wallet Addfundwallet ? 
+  statue Statue @default(PENDING)
+  created DateTime @default(now())
+  user User @relation(fields: [id],references: [id])
+} 
+
+model LocalTransfer {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [uuid])
+  userId      String
+  recipient   String
+  bankName    String
+  accountNo   String
+  amount      Float
+  currency    String   @default("NGN")
+  status      TransferStatus @default(PENDING)
+  reason      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model InternationalTransfer {
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [uuid])
+  userId        String
+  recipient     String
+  bankName      String
+  accountNo     String
+  iban          String?
+  swiftCode     String?
+  country       String
+  amount        Float
+  currency      String   @default("USD")
+  status        TransferStatus @default(PENDING)
+  reason        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum TransferStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+
+enum Statue {
+  PENDING
+  APPROVED
+  FAILED
+  REVERSE
+}
+ 
+
+
+
+model VirtualCard {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [uuid])
+  userId      String
+
+  cardType    CardType @default(DEBIT)      // Virtual Debit or Credit
+  currency    String                        // USD, EUR, NGN, etc.
+  spendingLimit Float                       // Monthly spending limit
+  status      CardStatus @default(PENDING)  // Pending, Approved, Active, Blocked
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  expire Int 
+  Valid Int 
+  cardnum String 
+  ccv String 
+
+  created DateTime @default(now())
+ 
+}
+
+enum CardType {
+  DEBIT
+  CREDIT
+}
+
+enum CardStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  BLOCKED
+}
+
+ 

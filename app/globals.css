@@ -2,20 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+ 
+body{
+    background-color: whitesmoke;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.animate{
+    animation-name: anim;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation-delay: 2s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes anim {
+   0%{
+margin-left: 0;
+   } 
+   100%{
+margin-left: 20px;
+   }
+}
+
+
+.font-ap{
+   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.font-ap2{
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.font-ap2{
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
