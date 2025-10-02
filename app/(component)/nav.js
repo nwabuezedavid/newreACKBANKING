@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useContext } from 'react';
 import { uniVersalc } from './uni';
+import LogoutButton from './logout';
  
 
  
@@ -56,7 +57,7 @@ const NaV = () => {
   <Link href={'/help/'} className='w-[90%] p-3 gap-3 capitalize  font-bold text-gray-600 text-md hover:shadow-2 hover:shadow-md hover:bg-white hover:rounded-md hover:border-2 hover:text-black'>
   <i className="bi bi-exclamation-circle-fill"></i>
     <h3>  Help</h3></Link>
-  <Link href={'/'} className='w-[90%] p-3 gap-3 capitalize  font-bold text-gray-600 text-md hover:shadow-2 hover:shadow-md hover:bg-white hover:rounded-md hover:border-2 hover:text-black'>
+  <Link href={'/feedback/'} className='w-[90%] p-3 gap-3 capitalize  font-bold text-gray-600 text-md hover:shadow-2 hover:shadow-md hover:bg-white hover:rounded-md hover:border-2 hover:text-black'>
   <i className="bi bi-chat-dots"></i>
     <h3>  feedback</h3></Link>
 </span>
@@ -65,14 +66,8 @@ const NaV = () => {
 
 {/* logout */}
 <span className=' h-full w-full *:flex *:flex-row px-5 flex-1 justify-end flex flex-col pb-[30%]'>
-    <Link href={'/'} className='w-[90%] p-3 gap-3   capitalize   font-light text-gray-600 text-md  shadow-2 shadow-md hover:bg-white rounded-md  hover:text-black'>
-    <i className="bi bi-gear-fill"></i>
-    <h3 className=''>  setting</h3>
-  </Link>
-    <Link href={'/'} className='w-[90%] p-3 gap-3   capitalize   font-light text-gray-600 text-md  shadow-2 shadow-md hover:bg-white rounded-md  hover:text-black'>
-    <i className="bi bi-toggles"></i>
-    <h3>  Logout</h3>
-  </Link>
+  
+    <LogoutButton/>
 </span>
     </main>
     </>
